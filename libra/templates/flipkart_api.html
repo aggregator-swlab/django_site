@@ -6,14 +6,19 @@
 <body>
 
 	{% for product in allprods %}
-			<p>Product Id : {{ product.id }} </p>
+			<!-- <p>Product Id : {{ product.id }} </p>
 			<p>Title : {{ product.title }} </p>
 			<p>Category : {{ product.category }} </p>
 			<p>MRP : {{ product.mrp }} </p>
 			<p>SP : {{ product.sp }} </p>
 			<p>URL : {{ product.url }} </p>
 			<p>Brand : {{ product.brand }} </p>
-			<p>Image Url : {{ product.imgurl }} </p>
+			<p>Image Url : {{ product.imgurl }} </p> -->
+
+			<img src="{{ product.imgurl }}" width="200px" height="200px" style="float:left">
+			<center><a href="{{ product.url }}"><h1>{{ product.id }} - {{ product.title }} </h1></a>
+			<h2>{{ product.brand }}  <br> {{ product.category }}</h2>
+			<h3>{{ product.mrp }}X  &nbsp;&nbsp; SP : {{ product.sp }} </h3></center>
 		<br><br><hr><br><br>
 	{% endfor %}
 
