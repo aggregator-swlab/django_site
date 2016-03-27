@@ -180,5 +180,58 @@ def compare(request):
 
 	all_sites_final.append(final_snapdeal_prod)
 
+	#ebay array
+
+	ebay_minimum = 100000000
+	title = temptitle.replace(" ","+")
+	url = "http://www.ebay.in/sch/i.html?_nkw=" + title
+	page = urllib2.urlopen(url)
+	soupe = BeautifulSoup(page, "html.parser")
+	all_links = soupe.find_all("li", class_="sresult lvresult clearfix li")
+
+	final_ebay_prod = dict()
+
+	for i in all_links:
+		ebay_prod = dict()
+	    	try:
+	        		title = i.select('h3.lvtitle a.vip')[0].text.encode("utf-8").strip()
+	    	except:
+	        		title = "NA"
+	    	try:
+	        		mrp = i.select('li.lvprice span.bold')[0].text.encode("utf-8").strip()
+	    	except:
+	        		mrp = "NA"
+	    	try:
+	        		link = i.select('h3.lvtitle a.vip')[0].get("href")
+	    	except:
+	        		link = "NA"
+	    	try:
+	        		imgurl = i.select('img.img')[0].get("src")
+	    	except:
+	        		imgurl = "NA"
+
+		ebay_prod['title'] = title
+		ebay_prod['imgurl'] = imgurl
+		ebay_prod['price'] = mrp
+		ebay_prod['url'] = link
+		ebay_prod['rating'] = "NA"
+
+		try:
+			ebay_price = price.decode('utf8')
+			ebay_price = ebay_price.replace(",","")
+			ebay_price = ebay_price.strip()
+			ebay_price = int(float(ebay_price))
+			if(abs(ebay_price - flipkart_price) < ebay_minimum):
+				final_ebay_prod['title'] = title
+				final_ebay_prod['imgurl'] = imgurl
+				final_ebay_prod['price'] = mrp
+				final_ebay_prod['url'] = link
+				final_ebay_prod['rating'] = "NA"
+				ebay_minimum = abs(ebay_price - flipkart_price)
+		except:
+			qqq = 1
+
+	all_sites_final.append(final_ebay_prod)
+
 	return render_to_response('compare.html', {'allprods': all_sites_final}, context_instance=RequestContext(request))
 	# return render_to_response('compare.html', {'price': price}, context_instance=RequestContext(request))
