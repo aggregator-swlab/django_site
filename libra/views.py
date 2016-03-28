@@ -49,6 +49,8 @@ def search(request):
 
 		all_prods.append(prod.copy())
 
+		request.session['all_flipkart_session'] = all_prods
+
 	# return render_to_response('search.html', {'query': query}, context_instance=RequestContext(request))
 	return render_to_response('search.html', {'allprods': all_prods}, context_instance=RequestContext(request))
 
@@ -60,6 +62,23 @@ def compare(request):
 	flipkart_price = int(float(price))
 
 	all_sites_final = list()
+
+	#flipkart array
+	flipkart_prod = dict()
+	all_flipkart_prods = request.session['all_flipkart_session']
+	for i in all_flipkart_prods:
+		if i['title'] == temptitle:
+		# if i['sp'] == request.GET['price']:
+			flipkart_prod['server'] = "FLIPKART"
+			flipkart_prod['title'] = i['title']
+			flipkart_prod['price'] = i['sp']
+			flipkart_prod['imgurl'] = i['imgurl']
+			flipkart_prod['url'] = i['url']
+			flipkart_prod['rating'] = "NA"
+			break
+
+	all_sites_final.append(flipkart_prod)
+
 
 	#amazon array
 	amazon_minimum = 100000000
@@ -95,6 +114,7 @@ def compare(request):
 		except:
 			rating = "NA"
 
+		amazon_prod['server'] = "AMAZON"
 		amazon_prod['title'] = title
 		amazon_prod['imgurl'] = imgurl
 		amazon_prod['price'] = price
@@ -107,11 +127,12 @@ def compare(request):
 			amazon_price = amazon_price.strip()
 			amazon_price = int(float(amazon_price))
 			if(abs(amazon_price - flipkart_price) < amazon_minimum):
+				final_amazon_prod['server'] = "AMAZON"
 				final_amazon_prod['title'] = title
 				final_amazon_prod['imgurl'] = imgurl
 				final_amazon_prod['price'] = price
 				final_amazon_prod['url'] = link
-				final_amazon_prod['rating'] = rating
+				final_amazon_prod['rating'] = rating + " / 5"
 				amazon_minimum = abs(amazon_price - flipkart_price)
 		except:
 			qqq = 1
@@ -157,6 +178,7 @@ def compare(request):
 		except:
 			rating = "NA"
 
+		snapdeal_prod['server'] = "SNAPDEAL"
 		snapdeal_prod['title'] = title
 		snapdeal_prod['imgurl'] = imgurl
 		snapdeal_prod['price'] = sp
@@ -169,11 +191,12 @@ def compare(request):
 			snapdeal_price = snapdeal_price.strip()
 			snapdeal_price = int(float(snapdeal_price))
 			if(abs(snapdeal_price - flipkart_price) < snapdeal_minimum):
+				final_snapdeal_prod['server'] = "SNAPDEAL"
 				final_snapdeal_prod['title'] = title
 				final_snapdeal_prod['imgurl'] = imgurl
 				final_snapdeal_prod['price'] = sp
 				final_snapdeal_prod['url'] = link
-				final_snapdeal_prod['rating'] = rating
+				final_snapdeal_prod['rating'] = rating + " / 100"
 				snapdeal_minimum = abs(snapdeal_price - flipkart_price)
 		except:
 			qqq = 1
@@ -222,6 +245,7 @@ def compare(request):
 			ebay_price = ebay_price.strip()
 			ebay_price = int(float(ebay_price))
 			if(abs(ebay_price - flipkart_price) < ebay_minimum):
+				final_ebay_prod['server'] = "EBAY"
 				final_ebay_prod['title'] = title
 				final_ebay_prod['imgurl'] = imgurl
 				final_ebay_prod['price'] = mrp

@@ -8,10 +8,12 @@
 	{% for product in allprods %}
 
 			<img src="{{ product.imgurl }}" height="200px" style="float:left">
-			<center><a href="/compare/?title={{product.title}}"><h1>{{ product.title }} </h1></a>
+			<center><h1 style="color:red">Product from {{product.server}}</h1>
+			<a href="{{product.url}}"><h1>{{ product.title }} </h1></a>
 			<h3>Price : {{ product.price }} </h3>
 			<h4>Rating : {{ product.rating }}</h4></center>
 		<br><br><hr><br><br>
+
 	{% endfor %}
 
 </body>
