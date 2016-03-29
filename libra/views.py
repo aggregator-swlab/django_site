@@ -48,18 +48,12 @@ def search(request):
 		prod['brand'] = prodbrand
 
 		all_prods.append(prod.copy())
-
 		request.session['all_flipkart_session'] = all_prods
 
 	# return render_to_response('search.html', {'query': query}, context_instance=RequestContext(request))
 	return render_to_response('search.html', {'allprods': all_prods}, context_instance=RequestContext(request))
 
-def compare(request):
-	temptitle = request.GET['title']
-	title = temptitle.replace(" ","+")
-	price = request.GET['price']
-	price = price.replace(",","")
-	flipkart_price = int(float(price))
+def compare(request, prodid):
 
 	all_sites_final = list()
 
@@ -67,8 +61,7 @@ def compare(request):
 	flipkart_prod = dict()
 	all_flipkart_prods = request.session['all_flipkart_session']
 	for i in all_flipkart_prods:
-		if i['title'] == temptitle:
-		# if i['sp'] == request.GET['price']:
+		if i['id'] == prodid:
 			flipkart_prod['server'] = "FLIPKART"
 			flipkart_prod['title'] = i['title']
 			flipkart_prod['price'] = i['sp']
@@ -78,6 +71,11 @@ def compare(request):
 			break
 
 	all_sites_final.append(flipkart_prod)
+
+	temptitle = flipkart_prod['title']
+	title = temptitle.replace(" ","+")
+	price = flipkart_prod['price']
+	flipkart_price = int(price)
 
 
 	#amazon array
@@ -186,7 +184,7 @@ def compare(request):
 		snapdeal_prod['rating'] = rating
 
 		try:
-			snapdeal_price = price.decode('utf8')
+			snapdeal_price = sp[4:]
 			snapdeal_price = snapdeal_price.replace(",","")
 			snapdeal_price = snapdeal_price.strip()
 			snapdeal_price = int(float(snapdeal_price))
@@ -198,6 +196,7 @@ def compare(request):
 				final_snapdeal_prod['url'] = link
 				final_snapdeal_prod['rating'] = rating + " / 100"
 				snapdeal_minimum = abs(snapdeal_price - flipkart_price)
+			# all_sites_final.append(snapdeal_prod)
 		except:
 			qqq = 1
 
@@ -240,7 +239,7 @@ def compare(request):
 		ebay_prod['rating'] = "NA"
 
 		try:
-			ebay_price = price.decode('utf8')
+			ebay_price = mrp[4:]
 			ebay_price = ebay_price.replace(",","")
 			ebay_price = ebay_price.strip()
 			ebay_price = int(float(ebay_price))
@@ -258,4 +257,4 @@ def compare(request):
 	all_sites_final.append(final_ebay_prod)
 
 	return render_to_response('compare.html', {'allprods': all_sites_final}, context_instance=RequestContext(request))
-	# return render_to_response('compare.html', {'price': price}, context_instance=RequestContext(request))
+	# return render_to_response('compare.html', {'price': snapdeal_price}, context_instance=RequestContext(request))
