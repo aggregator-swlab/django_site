@@ -22,7 +22,8 @@ from libra.views import *
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^search/', search, name="search"),
+    url(r'^search/$', search, name="search"),
     url(r'^$', TemplateView.as_view(template_name="index.html")),
-    url(r'^compare/(?P<prodid>.*)/$', compare, name="compare"),
+    url(r'^compare/(?P<prodid>.*)$', compare, name="compare"),
+    url(r'^search/sort/(?P<method>.*)$', sort, name="sort"),
 ]
