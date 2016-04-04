@@ -13,10 +13,11 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from django.conf.urls import patterns, include, url
 from django.contrib import admin
-from django.conf.urls import patterns
 from django.views.generic import TemplateView
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+# from myweblab import settings
 
 from libra.views import *
 
@@ -26,4 +27,12 @@ urlpatterns = [
     url(r'^$', TemplateView.as_view(template_name="index.html")),
     url(r'^compare/(?P<prodid>.*)$', compare, name="compare"),
     url(r'^search/sort/(?P<method>.*)$', sort, name="sort"),
+    url(r'^search/filter/$', filterr, name="filter"),
+    url(r'^search/filter/sort_filtered/(?P<method>.*)$', sort_filtered, name="sort_filtered"),
 ]
+
+urlpatterns += staticfiles_urlpatterns()
+
+# urlpatterns += patterns('',
+#     url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}),
+# )

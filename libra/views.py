@@ -280,12 +280,53 @@ def sort(request, method):
 
 	if method == "relevance":
 		sorted_search_prods = all_search_prods
-		return render_to_response('sort.html', {'allprods': sorted_search_prods, 'brands': brands, 'min_price': min_price, 'max_price': max_price}, context_instance=RequestContext(request))
+		return render_to_response('sort.html', {'allprods': sorted_search_prods, 'brands': brands, 'min_price': min_price, 'max_price': max_price, 'method': 'relevance'}, context_instance=RequestContext(request))
 	if method == "lowtohigh":
 		sorted_search_prods = sorted(all_search_prods, key=lambda k: k['sp'])
-		return render_to_response('sort.html', {'allprods': sorted_search_prods, 'brands': brands, 'min_price': min_price, 'max_price': max_price}, context_instance=RequestContext(request))
+		return render_to_response('sort.html', {'allprods': sorted_search_prods, 'brands': brands, 'min_price': min_price, 'max_price': max_price, 'method': 'lowtohigh'}, context_instance=RequestContext(request))
 	if method == "hightolow":
 		sorted_search_prods = sorted(all_search_prods, key=lambda k: k['sp'], reverse=True)
-		return render_to_response('sort.html', {'allprods': sorted_search_prods, 'brands': brands, 'min_price': min_price, 'max_price': max_price}, context_instance=RequestContext(request))
+		return render_to_response('sort.html', {'allprods': sorted_search_prods, 'brands': brands, 'min_price': min_price, 'max_price': max_price, 'method': 'hightolow'}, context_instance=RequestContext(request))
 
 	# return render_to_response('sort.html', {'allprods': sorted_search_prods, 'brands': brands, 'min_price': min_price, 'max_price': max_price}, context_instance=RequestContext(request))
+
+def filterr(request):
+
+	all_search_prods = request.session['all_flipkart_session']
+	all_selected_brands = list()
+	filtered_prods = list()
+
+	brands = request.session['brands']
+	for i in brands:
+		try:
+			if request.GET[i]:
+				all_selected_brands.append(i)
+		except:
+			rrr = 1
+
+	for i in all_search_prods:
+		if i['brand'] in all_selected_brands:
+			filtered_prods.append(i)
+
+	request.session['filtered_prods'] = filtered_prods
+	request.session['all_selected_brands'] = all_selected_brands
+
+	return render_to_response('filter.html', {'allprods': filtered_prods, 'brands': brands, 'selected_brands': all_selected_brands}, context_instance=RequestContext(request))
+
+def sort_filtered(request, method):
+
+	all_search_prods = request.session['filtered_prods']
+	brands = request.session['brands']
+	all_selected_brands = request.session['all_selected_brands']
+	max_price = request.session['max_price']
+	min_price = request.session['min_price']
+
+	if method == "relevance":
+		sorted_search_prods = all_search_prods
+		return render_to_response('sort_filtered.html', {'allprods': sorted_search_prods, 'brands': brands, 'all_selected_brands': all_selected_brands,  'min_price': min_price, 'max_price': max_price, 'method': 'relevance'}, context_instance=RequestContext(request))
+	if method == "lowtohigh":
+		sorted_search_prods = sorted(all_search_prods, key=lambda k: k['sp'])
+		return render_to_response('sort_filtered.html', {'allprods': sorted_search_prods, 'brands': brands, 'all_selected_brands': all_selected_brands,  'min_price': min_price, 'max_price': max_price, 'method': 'lowtohigh'}, context_instance=RequestContext(request))
+	if method == "hightolow":
+		sorted_search_prods = sorted(all_search_prods, key=lambda k: k['sp'], reverse=True)
+		return render_to_response('sort_filtered.html', {'allprods': sorted_search_prods, 'brands': brands, 'all_selected_brands': all_selected_brands, 'min_price': min_price, 'max_price': max_price, 'method': 'hightolow'}, context_instance=RequestContext(request))

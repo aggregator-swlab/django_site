@@ -1,57 +1,26 @@
 {% extends 'base.html' %}
 
+{% block title %} <title>Libra</title> {% endblock %}
+
 {% block body %}
 
-	<center><h1>Welcome to Aggregator !</h1>
+	<center><h1>Welcome to Aggregator !</h1></center>
 
-	<form method="get" action="/search/">
+	<!-- <form method="get" action="/search/">
 		<input type="text" name="search" placeholder="Search here"><br>
 		<input type="submit" name="submit"></center>
-	</form>
+	</form> -->
+
+	<nav>
+	    	<div class="nav-wrapper">
+	      		<form id="searchbar" action="/search/" method="get">
+	        		<div class="input-field col l8 s8 push-s2">
+	          			<input type="search" class="center-align" placeholder="What are we looking for today??" name="search" required>
+	          			<label for="search"><i class="material-icons">search</i><input style="visibility:hidden" type="submit" value="Search" name="submit"></label>
+	          			<i class="material-icons">close</i>
+	        		</div>
+	      		</form>
+	    	</div>
+	</nav>
 
 {% endblock %}
-
-<style type="text/css">
-
-	body
-	{
-		font-family: Candara, Calibri, Segoe, 'Segoe UI', Optima, Arial, sans-serif;
-		background-color: aqua;
-		background-size: cover;
-	}
-
-	h1
-	{
-		margin-top: 20%;
-		color: red;
-		font-size: 50px;
-	}
-
-	input[type="text"]
-	{
-		margin-top: 2%;
-		height: 20px;
-		width: 150px;
-		font-size: 15px;
-		border: 1px solid brown;
-		text-align: center;
-	}
-
-	input[type="text"]:focus
-	{
-		margin-top: 2%;
-		height: 20px;
-		width: 150px;
-		font-size: 15px;
-		border: 2px solid brown;
-	}
-
-	input[type="submit"]
-	{
-		margin-top: 1%;
-		height: 20px;
-		width: 50px;
-		font-size: 15px;
-	}
-
-</style>

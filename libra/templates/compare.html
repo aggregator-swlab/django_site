@@ -1,22 +1,33 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Flipkart Initial Links</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block title %} <title>Libra | compare</title> {% endblock %}
+
+{% block body %}
 
 	{% for product in allprods %}
 
+		{% if product.url %}
+
 			<img src="{{ product.imgurl }}" height="200px" style="float:left">
-			<center><h1 style="color:red">Product from {{product.server}}</h1>
-			<a href="{{product.url}}"><h1>{{ product.title }} </h1></a>
-			<h3>Price : {{ product.price }} </h3>
-			<h4>Rating : {{ product.rating }}</h4></center>
+			<center><h3 style="color:red">Product from {{product.server}}</h3>
+			<a href="{{product.url}}"><h3>{{ product.title }} </h3></a>
+			<h4>Price : {{ product.price }} </h4>
+			<h5>Rating : {{ product.rating }}</h5></center>
+
+		{% else %}
+
+			<img src="http://www.oolongpuerhtea.com/public/images/no_product_img.jpg" height="200px" style="float:left">
+			<center><h3 style="color:red">Not available on
+								{% if forloop.counter == 1 %} Flipkart {% endif %}
+								{% if forloop.counter == 2 %} Amazon {% endif %}
+								{% if forloop.counter == 3 %} Snapdeal {% endif %}
+								{% if forloop.counter == 4 %} Ebay {% endif %}
+				</h3></center>
+
+		{% endif %}
+
 		<br><br><hr><br><br>
 
 	{% endfor %}
 
-	<!-- {{price}} -->
-
-</body>
-</html>
+{% endblock %}

@@ -21,9 +21,9 @@
 					<li class="placeholder">
 						<a data-type="all" href="#0">All</a> <!-- selected option on mobile -->
 					</li>
-					<li class="filter"><a id="relid" class="selected" href="/search/sort/relevance" data-type="all"><b>Relevance</b></a></li>
-					<li class="filter" data-filter=".color-1"><a id="prltoh" href="/search/sort/lowtohigh" data-type="color-1"><b>Price low - high</b></a></li>
-					<li class="filter" data-filter=".color-2"><a id="prhtol" href="/search/sort/hightolow" data-type="color-2"><b>Price high - low</b></a></li>
+					<li class="filter"><a id="relid" class="selected" href="/search/filter/sort_filtered/relevance" data-type="all"><b>Relevance</b></a></li>
+					<li class="filter" data-filter=".color-1"><a id="prltoh" href="/search/filter/sort_filtered/lowtohigh" data-type="color-1"><b>Price low - high</b></a></li>
+					<li class="filter" data-filter=".color-2"><a id="prhtol" href="/search/filter/sort_filtered/hightolow" data-type="color-2"><b>Price high - low</b></a></li>
 				</ul> <!-- cd-filters -->
 			</div> <!-- cd-tab-filter -->
 		</div> <!-- cd-tab-filter-wrapper -->
@@ -39,7 +39,7 @@
 						<div class="col l3 m6 s12">
 							<div class="card medium hoverable">
 								<div class="card-image waves-effect waves-block waves-light">
-									<img class="activator" src="{{ product.imgurl }}" class="valign">
+									<img class="activator" src="{{ product.imgurl }}" class="">
 								</div>
 								<div class="right-content">
 									<h5 class="card-title activator grey-text text-darken-4 valign center-align">{{ product.title }}</h5>
@@ -69,7 +69,11 @@
 
 						{% for brand in brands %}
 							<p>
-								<input type="checkbox" name="{{ brand }}" id="idbrand{{ forloop.counter }}" checked="checked" />
+								{% if brand in selected_brands %}
+									<input type="checkbox" name="{{ brand }}" id="idbrand{{ forloop.counter }}" checked="checked" />
+								{% else %}
+									<input type="checkbox" name="{{ brand }}" id="idbrand{{ forloop.counter }}"/>
+								{% endif %}
 								<label name="labelbrand{{ forloop.counter }}" for="idbrand{{ forloop.counter }}" value="{{ brand }}"> {{ brand }} </label>
 							</p>
 						{% endfor %}
