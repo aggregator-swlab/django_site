@@ -6,15 +6,16 @@
 
 {% block head_extras %}
 
-	<link rel="stylesheet" type="text/css" href="http://localhost/aggregator/css/search.css">
+	<link rel="stylesheet" type="text/css" href="http://localhost/aggregator/css/mainsearch.css">
 	<link rel="stylesheet" type="text/css" href="http://localhost/aggregator/side_menu/css/style.css">
 	<link rel="stylesheet" type="text/css" href="http://localhost/aggregator/side_menu/css/reset.css">
 	<script type="text/javascript" src="http://localhost/aggregator/side_menu/js/main.js"></script>
+	<script type="text/javascript" src="http://localhost/aggregator/js/main.js"></script>
 	<script type="text/javascript" src="http://localhost/aggregator/side_menu/js/modernizr.js"></script>
 
 {% endblock %}
 
-	<main class="cd-main-content">
+	<main class="cd-main-content is-fixed">
 		<div class="cd-tab-filter-wrapper">
 			<div class="cd-tab-filter">
 				<ul class="cd-filters" style="z:index:10000">
@@ -37,21 +38,23 @@
 					{% for product in allprods %}
 
 						<div class="col l3 m6 s12">
+
 							<div class="card medium hoverable">
-								<div class="card-image waves-effect waves-block waves-light">
-									<img class="activator" src="{{ product.imgurl }}" class="valign">
-								</div>
-								<div class="right-content">
-									<h5 class="card-title activator grey-text text-darken-4 valign center-align">{{ product.title }}</h5>
-									<div class="card-content">
-										<p>By <span class="center-align">{{ product.brand }}</span></p>
-										<p>Price : <span class="center-align">{{ product.sp }}</span></p>
+							    	<div class="card-image">
+							      		<img class="" src="{{ product.imgurl }}">
+							    	</div>
+							    	<div class="card-content">
+							      		<h4 class="text-darken-2 activator valign center-align">{{ product.title }}</h4>
+							      		<p class="center-align">By <span class="brand">{{ product.brand }}</span></p>
+									<p class="center-align">Price : <span class="sp"> Rs. {{ product.sp }}</span></p>
+							    	</div>
+								<a target="_blank" href="/compare/{{product.id}}">
+								    	<div class="card-action">
+										<p>Compare</p>
 									</div>
-									<div class="card-action">
-										<a href="/compare/{{product.id}}"><span class="center-align">Compare</span></a>
-									</div>
-								</div>
-							</div>
+								</a>
+						  	</div>
+
 						</div>
 
 					{% endfor %}
@@ -65,7 +68,7 @@
 
 					<form action="/search/filter">
 
-						<h4><i class="material-icons prefix"> list </i> Brands</h4>
+						<h4><i class="material-icons prefix valign"> list </i> Brands</h4>
 
 						{% for brand in brands %}
 							<p>
@@ -74,11 +77,14 @@
 							</p>
 						{% endfor %}
 
-						<!-- <h4><i class="material-icons prefix"> code </i> Price</h4>
+						<h4><i class="material-icons prefix"> code </i> Price</h4>
 						<h6>(Select the upper price limit)</h6>
 			    			<p class="range-field">
 						      	<input type="range" id="test005" min="{{ min_price }}" max="{{ max_price }}" value="{{ max_price }}" />
-						</p> -->
+						</p>
+						<p>Max price set is : <span id="display_max_price">Rs. {{ max_price }}</span></p>
+
+						<input type="text" style="visibility:hidden" value="{{ max_price }}" id="hidden-price" name="hidden-price">
 
 						<button class="btn waves-effect waves-light" type="submit" id="action">Filter
 							<i class="material-icons right">send</i>
@@ -97,5 +103,16 @@
 		<a href="#0" class="cd-filter-trigger">Filters</a>
 
 	</main> <!-- cd-main-content -->
+
+	<script type="text/javascript">
+
+		$( "#test005" ).change(function() {
+		  	var maxprice = $(this).val()
+		  	// alert(maxprice)
+		  	$("#hidden-price").val(maxprice)
+		  	$("#display_max_price").text("Rs. " + maxprice)
+		});
+
+	</script>
 
 {% endblock %}

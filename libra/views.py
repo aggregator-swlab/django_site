@@ -31,6 +31,7 @@ def search(request):
 		prod = dict()
 
 		prodcat = value['productBaseInfo']['productIdentifier']['categoryPaths']['categoryPath'][0][0]['title']
+		proddesc = value['productBaseInfo']['productAttributes']['productDescription'];
 		prodid = value['productBaseInfo']['productIdentifier']['productId']
 		prodtitle = value['productBaseInfo']['productAttributes']['title']
 		prodimgurl = value['productBaseInfo']['productAttributes']['imageUrls']['unknown']
@@ -41,6 +42,7 @@ def search(request):
 
 		prod['category'] = prodcat
 		prod['id'] = prodid
+		prod['proddesc'] = proddesc
 		prod['title'] = prodtitle
 		prod['imgurl'] = prodimgurl
 		prod['mrp'] = prodmrp
@@ -80,6 +82,9 @@ def compare(request, prodid):
 			flipkart_prod['imgurl'] = i['imgurl']
 			flipkart_prod['url'] = i['url']
 			flipkart_prod['rating'] = "NA"
+			request.session['proddesc'] = i['proddesc']
+			request.session['prodtitle'] = i['title']
+			request.session['prodimage'] = i['imgurl']
 			break
 
 	all_sites_final.append(flipkart_prod)
@@ -88,6 +93,10 @@ def compare(request, prodid):
 	title = temptitle.replace(" ","+")
 	price = flipkart_prod['price']
 	flipkart_price = int(price)
+
+	# request.session['proddesc'] = proddesc
+	# request.session['prodtitle'] = prodtitle
+	# request.session['prodimage'] = prodimgurl
 
 
 	#amazon array
@@ -268,7 +277,11 @@ def compare(request, prodid):
 
 	all_sites_final.append(final_ebay_prod)
 
-	return render_to_response('compare.html', {'allprods': all_sites_final}, context_instance=RequestContext(request))
+	proddesc = request.session['proddesc']
+	prodtitle = request.session['prodtitle']
+	prodimgurl = request.session['prodimage']
+
+	return render_to_response('compare.html', {'allprods': all_sites_final, 'title': prodtitle, 'desc': proddesc, 'imageurl': prodimgurl}, context_instance=RequestContext(request))
 	# return render_to_response('compare.html', {'price': snapdeal_price}, context_instance=RequestContext(request))
 
 def sort(request, method):
@@ -295,6 +308,8 @@ def filterr(request):
 	all_search_prods = request.session['all_flipkart_session']
 	all_selected_brands = list()
 	filtered_prods = list()
+	max_price = request.session['max_price']
+	min_price = request.session['min_price']
 
 	brands = request.session['brands']
 	for i in brands:
@@ -304,14 +319,18 @@ def filterr(request):
 		except:
 			rrr = 1
 
+	max_price_filtered = request.GET['hidden-price']
+	request.session['max_price_filtered'] = max_price_filtered
+
 	for i in all_search_prods:
 		if i['brand'] in all_selected_brands:
-			filtered_prods.append(i)
+			if i['sp'] <= int(float(max_price_filtered)):
+				filtered_prods.append(i)
 
 	request.session['filtered_prods'] = filtered_prods
 	request.session['all_selected_brands'] = all_selected_brands
 
-	return render_to_response('filter.html', {'allprods': filtered_prods, 'brands': brands, 'selected_brands': all_selected_brands}, context_instance=RequestContext(request))
+	return render_to_response('filter.html', {'allprods': filtered_prods, 'brands': brands, 'selected_brands': all_selected_brands, 'filtered_price': max_price_filtered, 'min_price': min_price, 'max_price': max_price}, context_instance=RequestContext(request))
 
 def sort_filtered(request, method):
 
@@ -320,13 +339,33 @@ def sort_filtered(request, method):
 	all_selected_brands = request.session['all_selected_brands']
 	max_price = request.session['max_price']
 	min_price = request.session['min_price']
+	max_price_filtered = request.session['max_price_filtered']
 
 	if method == "relevance":
 		sorted_search_prods = all_search_prods
-		return render_to_response('sort_filtered.html', {'allprods': sorted_search_prods, 'brands': brands, 'all_selected_brands': all_selected_brands,  'min_price': min_price, 'max_price': max_price, 'method': 'relevance'}, context_instance=RequestContext(request))
+		return render_to_response('sort_filtered.html', {'allprods': sorted_search_prods, 'brands': brands, 'all_selected_brands': all_selected_brands, 'filtered_price': max_price_filtered, 'min_price': min_price, 'max_price': max_price, 'method': 'relevance'}, context_instance=RequestContext(request))
 	if method == "lowtohigh":
 		sorted_search_prods = sorted(all_search_prods, key=lambda k: k['sp'])
-		return render_to_response('sort_filtered.html', {'allprods': sorted_search_prods, 'brands': brands, 'all_selected_brands': all_selected_brands,  'min_price': min_price, 'max_price': max_price, 'method': 'lowtohigh'}, context_instance=RequestContext(request))
+		return render_to_response('sort_filtered.html', {'allprods': sorted_search_prods, 'brands': brands, 'all_selected_brands': all_selected_brands, 'filtered_price': max_price_filtered, 'min_price': min_price, 'max_price': max_price, 'method': 'lowtohigh'}, context_instance=RequestContext(request))
 	if method == "hightolow":
 		sorted_search_prods = sorted(all_search_prods, key=lambda k: k['sp'], reverse=True)
-		return render_to_response('sort_filtered.html', {'allprods': sorted_search_prods, 'brands': brands, 'all_selected_brands': all_selected_brands, 'min_price': min_price, 'max_price': max_price, 'method': 'hightolow'}, context_instance=RequestContext(request))
+		return render_to_response('sort_filtered.html', {'allprods': sorted_search_prods, 'brands': brands, 'all_selected_brands': all_selected_brands, 'filtered_price': max_price_filtered,'min_price': min_price, 'max_price': max_price, 'method': 'hightolow'}, context_instance=RequestContext(request))
+
+def deals(request):
+
+	f = open("deals_data", "w")
+	process = subprocess.call(['curl',  '-H', 'Fk-Affiliate-Id:shariffaz', '-H', 'Fk-Affiliate-Token:c569d5da22704c278e90af8226c42174', 'https://affiliate-api.flipkart.net/affiliate/offers/v1/dotd/json'], stdout=f)
+
+	with open('deals_data') as data_file:
+		data = json.load(data_file)
+
+	all_deals = list()
+
+	for value in data["dotdList"]:
+		deal = dict()
+		deal['title'] = value['title'] + " on " + value['description'];
+		deal['produrl'] = value['url'];
+		deal['imgurl'] = value['imageUrls'][0]['url'];
+		all_deals.append(deal.copy())
+
+	return render_to_response('deals.html', {'all_deals' : all_deals}, context_instance=RequestContext(request))
