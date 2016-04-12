@@ -53,16 +53,68 @@
 		          				<td style="width:25%">
 
 			          				{% if product.url %}
+			          					<p>Price : {{ product.price }} </p>
+			          				{% else %}
+								<p>NA</p>
+							{% endif %}
 
-								<p>Price : {{ product.price }} </p>
-								<p>Rating : {{ product.rating }}</p>
-								<a target="_blank" href="{{product.url}}"><p>Get this deal! </p></a>
+						</td>
 
+		          			{% endfor %}
+
+		          		</tr>
+		          		<tr>
+
+		          			{% for product in allprods %}
+
+		          				<td style="width:25%">
+
+			          				{% if product.url %}
+			          					<p>Rating : {{ product.rating }} </p>
 							{% else %}
+								<p>NA</p>
+							{% endif %}
 
-								<p>NA</p>
-								<p>NA</p>
-								<p>NA</p>
+						</td>
+
+		          			{% endfor %}
+
+		          		</tr>
+		          		<tr>
+
+		          			{% for product in allprods %}
+
+		          				<td style="width:25%">
+
+			          				{% if product.url %}
+
+			          					{% if forloop.counter == 1 %}
+			          						<a target="_blank" href="{{product.url}}" class="waves-effect waves-light btn-large"><i class="material-icons right"><img class="icon_img" src="http://localhost/aggregator/img/flipkart_small.png"></i>Grab this</a>
+			          					{% endif %}
+			          					{% if forloop.counter == 2 %}
+			          						<a target="_blank" href="{{product.url}}" class="waves-effect waves-light btn-large"><i class="material-icons right"><img class="icon_img" src="http://localhost/aggregator/img/amazon_small.png"></i>Grab this</a>
+			          					{% endif %}
+			          					{% if forloop.counter == 3 %}
+			          						<a target="_blank" href="{{product.url}}" class="waves-effect waves-light btn-large"><i class="material-icons right"><img class="icon_img" src="http://localhost/aggregator/img/snapdeal_small.png"></i>Grab this</a>
+			          					{% endif %}
+			          					{% if forloop.counter == 4 %}
+			          						<a target="_blank" href="{{product.url}}" class="waves-effect waves-light btn-large"><i class="material-icons right"><img class="icon_img" src="http://localhost/aggregator/img/ebay_small.png"></i>Grab this</a>
+			          					{% endif %}
+
+			          				{% else %}
+
+			          					{% if forloop.counter == 1 %}
+			          						<a target="_blank" href="#0" class="waves-effect waves-light btn-large disabled"><i class="material-icons right"><img class="icon_img" src="http://localhost/aggregator/img/flipkart_small.png"></i>Grab this</a>
+			          					{% endif %}
+			          					{% if forloop.counter == 2 %}
+			          						<a target="_blank" href="#0" class="waves-effect waves-light btn-large disabled"><i class="material-icons right"><img class="icon_img" src="http://localhost/aggregator/img/amazon_small.png"></i>Grab this</a>
+			          					{% endif %}
+			          					{% if forloop.counter == 3 %}
+			          						<a target="_blank" href="#0" class="waves-effect waves-light btn-large disabled"><i class="material-icons right"><img class="icon_img" src="http://localhost/aggregator/img/snapdeal_small.png"></i>Grab this</a>
+			          					{% endif %}
+			          					{% if forloop.counter == 4 %}
+			          						<a target="_blank" href="#0" class="waves-effect waves-light btn-large disabled"><i class="material-icons right"><img class="icon_img" src="http://localhost/aggregator/img/ebay_small.png"></i>Grab this</a>
+			          					{% endif %}
 
 							{% endif %}
 
@@ -115,6 +167,19 @@
       			padding-left: 50px;
       			margin-top: 50px;
       		}
+
+      		a i img.icon_img
+	  	{
+	  		margin-top: 3px;
+	  		height: 50px;
+	  		width: 50px;
+	  		margin-right: -30px;
+	  	}
+
+	  	/*table td + td, th + th
+	  	{
+	  		border-left: 1px solid gray;
+	  	}*/
 
       	</style>
 
