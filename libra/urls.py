@@ -34,7 +34,7 @@ urlpatterns = [
     url(r'^search/filter/sort_filtered/(?P<method>.*)$', sort_filtered, name="sort_filtered"),
 ]
 
-urlpatterns += staticfiles_urlpatterns()
+# urlpatterns += staticfiles_urlpatterns()
 
 # urlpatterns += patterns('',
 #     url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}),
