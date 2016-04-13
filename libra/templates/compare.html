@@ -2,6 +2,12 @@
 
 {% block title %} <title>Libra | compare</title> {% endblock %}
 
+{% block head_extras %}
+
+	<script type="text/javascript" src="http://localhost/aggregator/js/get_delivery.js"></script>
+
+{% endblock %}
+
 {% block body %}
 
 	<div class="container">
@@ -55,7 +61,7 @@
 			          				{% if product.url %}
 			          					<p>Price : {{ product.price }} </p>
 			          				{% else %}
-								<p>NA</p>
+								<p>Price : NA</p>
 							{% endif %}
 
 						</td>
@@ -72,7 +78,7 @@
 			          				{% if product.url %}
 			          					<p>Rating : {{ product.rating }} </p>
 							{% else %}
-								<p>NA</p>
+								<p>Rating : NA</p>
 							{% endif %}
 
 						</td>
@@ -80,6 +86,32 @@
 		          			{% endfor %}
 
 		          		</tr>
+
+		          		<tr>
+
+		          			<td class="flipkart_delivery">
+		          				<div class="preloader-wrapper small active">
+			          				<div class="spinner-layer spinner-blue-only"><div class="circle-clipper left"><div class="circle"></div></div><div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div>
+						</div>
+					</td>
+					<td class="amazon_delivery">
+		          				<div class="preloader-wrapper small active">
+			          				<div class="spinner-layer spinner-blue-only"><div class="circle-clipper left"><div class="circle"></div></div><div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div>
+						</div>
+					</td>
+					<td class="snapdeal_delivery">
+		          				<div class="preloader-wrapper small active">
+			          				<div class="spinner-layer spinner-blue-only"><div class="circle-clipper left"><div class="circle"></div></div><div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div>
+						</div>
+					</td>
+					<td class="ebay_delivery">
+		          				<div class="preloader-wrapper small active">
+			          				<div class="spinner-layer spinner-blue-only"><div class="circle-clipper left"><div class="circle"></div></div><div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div>
+						</div>
+					</td>
+
+		          		</tr>
+
 		          		<tr>
 
 		          			{% for product in allprods %}
@@ -89,31 +121,31 @@
 			          				{% if product.url %}
 
 			          					{% if forloop.counter == 1 %}
-			          						<a target="_blank" href="{{product.url}}" class="waves-effect waves-light btn-large"><i class="material-icons right"><img class="icon_img" src="http://localhost/aggregator/img/flipkart_small.png"></i>Grab this</a>
+			          						<a target="_blank" href="{{product.url}}" class="flipkart_site_link waves-effect waves-light btn-large"><i class="material-icons right"><img class="icon_img" src="http://localhost/aggregator/img/flipkart_small.png"></i>Grab this</a>
 			          					{% endif %}
 			          					{% if forloop.counter == 2 %}
-			          						<a target="_blank" href="{{product.url}}" class="waves-effect waves-light btn-large"><i class="material-icons right"><img class="icon_img" src="http://localhost/aggregator/img/amazon_small.png"></i>Grab this</a>
+			          						<a target="_blank" href="{{product.url}}" class="amazon_site_link waves-effect waves-light btn-large"><i class="material-icons right"><img class="icon_img" src="http://localhost/aggregator/img/amazon_small.png"></i>Grab this</a>
 			          					{% endif %}
 			          					{% if forloop.counter == 3 %}
-			          						<a target="_blank" href="{{product.url}}" class="waves-effect waves-light btn-large"><i class="material-icons right"><img class="icon_img" src="http://localhost/aggregator/img/snapdeal_small.png"></i>Grab this</a>
+			          						<a target="_blank" href="{{product.url}}" class="snapdeal_site_link waves-effect waves-light btn-large"><i class="material-icons right"><img class="icon_img" src="http://localhost/aggregator/img/snapdeal_small.png"></i>Grab this</a>
 			          					{% endif %}
 			          					{% if forloop.counter == 4 %}
-			          						<a target="_blank" href="{{product.url}}" class="waves-effect waves-light btn-large"><i class="material-icons right"><img class="icon_img" src="http://localhost/aggregator/img/ebay_small.png"></i>Grab this</a>
+			          						<a target="_blank" href="{{product.url}}" class="ebay_site_link waves-effect waves-light btn-large"><i class="material-icons right"><img class="icon_img" src="http://localhost/aggregator/img/ebay_small.png"></i>Grab this</a>
 			          					{% endif %}
 
 			          				{% else %}
 
 			          					{% if forloop.counter == 1 %}
-			          						<a target="_blank" href="#0" class="waves-effect waves-light btn-large disabled"><i class="material-icons right"><img class="icon_img" src="http://localhost/aggregator/img/flipkart_small.png"></i>Grab this</a>
+			          						<a href="#0" class="flipkart_site_link waves-effect waves-light btn-large disabled"><i class="material-icons right"><img class="icon_img" src="http://localhost/aggregator/img/flipkart_small.png"></i>Grab this</a>
 			          					{% endif %}
 			          					{% if forloop.counter == 2 %}
-			          						<a target="_blank" href="#0" class="waves-effect waves-light btn-large disabled"><i class="material-icons right"><img class="icon_img" src="http://localhost/aggregator/img/amazon_small.png"></i>Grab this</a>
+			          						<a href="#0" class="amazon_site_link waves-effect waves-light btn-large disabled"><i class="material-icons right"><img class="icon_img" src="http://localhost/aggregator/img/amazon_small.png"></i>Grab this</a>
 			          					{% endif %}
 			          					{% if forloop.counter == 3 %}
-			          						<a target="_blank" href="#0" class="waves-effect waves-light btn-large disabled"><i class="material-icons right"><img class="icon_img" src="http://localhost/aggregator/img/snapdeal_small.png"></i>Grab this</a>
+			          						<a href="#0" class="snapdeal_site_link waves-effect waves-light btn-large disabled"><i class="material-icons right"><img class="icon_img" src="http://localhost/aggregator/img/snapdeal_small.png"></i>Grab this</a>
 			          					{% endif %}
 			          					{% if forloop.counter == 4 %}
-			          						<a target="_blank" href="#0" class="waves-effect waves-light btn-large disabled"><i class="material-icons right"><img class="icon_img" src="http://localhost/aggregator/img/ebay_small.png"></i>Grab this</a>
+			          						<a href="#0" class="ebay_site_link waves-effect waves-light btn-large disabled"><i class="material-icons right"><img class="icon_img" src="http://localhost/aggregator/img/ebay_small.png"></i>Grab this</a>
 			          					{% endif %}
 
 							{% endif %}
@@ -180,6 +212,7 @@
 	  	{
 	  		border-left: 1px solid gray;
 	  	}*/
+
 
       	</style>
 

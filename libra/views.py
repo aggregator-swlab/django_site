@@ -281,6 +281,8 @@ def compare(request, prodid):
 	prodtitle = request.session['prodtitle']
 	prodimgurl = request.session['prodimage']
 
+	request.session['final_compared'] = all_sites_final
+
 	return render_to_response('compare.html', {'allprods': all_sites_final, 'title': prodtitle, 'desc': proddesc, 'imageurl': prodimgurl}, context_instance=RequestContext(request))
 	# return render_to_response('compare.html', {'price': snapdeal_price}, context_instance=RequestContext(request))
 
@@ -369,3 +371,40 @@ def deals(request):
 		all_deals.append(deal.copy())
 
 	return render_to_response('deals.html', {'all_deals' : all_deals}, context_instance=RequestContext(request))
+
+def flip_delivery(request):
+	all_sites_final = request.session['final_compared']
+	flipkart_link = all_sites_final[0]['url']
+
+	page = urllib2.urlopen(flipkart_link)
+	soupe = BeautifulSoup(page, "html.parser")
+	del_date = soupe.find_all("ul", class_="fk-ul-disc")
+
+	return HttpResponse(del_date[3].select("li")[0].string)
+
+def amazon_delivery(request):
+	# all_sites_final = request.session['final_compared']
+	# amazon_link = all_sites_final[1]['url']
+
+	# page = urllib2.urlopen(amazon_link)
+	# soupe = BeautifulSoup(page, "html.parser")
+	# del_date = soupe.find_all("span",id_="ddmShippingMessage")
+	return HttpResponse("NA")
+
+def snapdeal_delivery(request):
+	all_sites_final = request.session['final_compared']
+	snapdeal_link = all_sites_final[2]['url']
+
+	page = urllib2.urlopen(snapdeal_link)
+	soupe = BeautifulSoup(page, "html.parser")
+	del_date = soupe.find_all("div", class_="check-avail-pin-info")
+
+	for i in del_date:
+		return HttpResponse(i.select("p")[0].text)
+
+def ebay_delivery(request):
+	# page = urllib2.urlopen(ebay_link)
+	# soupe = BeautifulSoup(page, "html.parser")
+	# del_date = soupe.find_all("span", class_="estimated-date")
+
+	return HttpResponse("NA")
