@@ -4,7 +4,11 @@
 
 {% block head_extras %}
 
+<<<<<<< HEAD
 	<script type="text/javascript" src="http://athena.nitc.ac.in/azharullahshariff_b130727cs/aggregator/js/get_delivery.js"></script>
+=======
+	<script type="text/javascript" src="http://localhost/aggregator/js/get_delivery.js"></script>
+>>>>>>> 03d8735c63341c45ae9dc662155abeb92afd5cdb
 
 {% endblock %}
 
@@ -43,10 +47,17 @@
 		<table class="centered responsive-table">
 		        	<thead>
 		          		<tr>
+<<<<<<< HEAD
 		              		<th data-field="flipkart"><img width="200px" src="http://athena.nitc.ac.in/azharullahshariff_b130727cs/aggregator/img/flipkart.png"></th>
 		              		<th data-field="amazon"><img width="200px" src="http://athena.nitc.ac.in/azharullahshariff_b130727cs/aggregator/img/amazon.png"></th>
 		              		<th data-field="snapdeal"><img width="200px" src="http://athena.nitc.ac.in/azharullahshariff_b130727cs/aggregator/img/snapdeal.png"></th>
 		              		<th data-field="ebay"><img width="200px" src="http://athena.nitc.ac.in/azharullahshariff_b130727cs/aggregator/img/ebay.png"></th>
+=======
+		              		<th data-field="flipkart"><img width="200px" src="http://localhost/aggregator/img/flipkart.png"></th>
+		              		<th data-field="amazon"><img width="200px" src="http://localhost/aggregator/img/amazon.png"></th>
+		              		<th data-field="snapdeal"><img width="200px" src="http://localhost/aggregator/img/snapdeal.png"></th>
+		              		<th data-field="ebay"><img width="200px" src="http://localhost/aggregator/img/ebay.png"></th>
+>>>>>>> 03d8735c63341c45ae9dc662155abeb92afd5cdb
 		          		</tr>
 		        	</thead>
 
@@ -121,6 +132,7 @@
 			          				{% if product.url %}
 
 			          					{% if forloop.counter == 1 %}
+<<<<<<< HEAD
 			          						<a target="_blank" href="{{product.url}}" class="flipkart_site_link waves-effect waves-light btn-large"><i class="material-icons right"><img class="icon_img" src="http://athena.nitc.ac.in/azharullahshariff_b130727cs/aggregator/img/flipkart_small.png"></i>Grab this</a>
 			          					{% endif %}
 			          					{% if forloop.counter == 2 %}
@@ -131,11 +143,24 @@
 			          					{% endif %}
 			          					{% if forloop.counter == 4 %}
 			          						<a target="_blank" href="{{product.url}}" class="ebay_site_link waves-effect waves-light btn-large"><i class="material-icons right"><img class="icon_img" src="http://athena.nitc.ac.in/azharullahshariff_b130727cs/aggregator/img/ebay_small.png"></i>Grab this</a>
+=======
+			          						<a target="_blank" href="{{product.url}}" class="flipkart_site_link waves-effect waves-light btn-large"><i class="material-icons right"><img class="icon_img" src="http://localhost/aggregator/img/flipkart_small.png"></i>Grab this</a>
+			          					{% endif %}
+			          					{% if forloop.counter == 2 %}
+			          						<a target="_blank" href="{{product.url}}" class="amazon_site_link waves-effect waves-light btn-large"><i class="material-icons right"><img class="icon_img" src="http://localhost/aggregator/img/amazon_small.png"></i>Grab this</a>
+			          					{% endif %}
+			          					{% if forloop.counter == 3 %}
+			          						<a target="_blank" href="{{product.url}}" class="snapdeal_site_link waves-effect waves-light btn-large"><i class="material-icons right"><img class="icon_img" src="http://localhost/aggregator/img/snapdeal_small.png"></i>Grab this</a>
+			          					{% endif %}
+			          					{% if forloop.counter == 4 %}
+			          						<a target="_blank" href="{{product.url}}" class="ebay_site_link waves-effect waves-light btn-large"><i class="material-icons right"><img class="icon_img" src="http://localhost/aggregator/img/ebay_small.png"></i>Grab this</a>
+>>>>>>> 03d8735c63341c45ae9dc662155abeb92afd5cdb
 			          					{% endif %}
 
 			          				{% else %}
 
 			          					{% if forloop.counter == 1 %}
+<<<<<<< HEAD
 			          						<a href="#0" class="flipkart_site_link waves-effect waves-light btn-large disabled"><i class="material-icons right"><img class="icon_img" src="http://athena.nitc.ac.in/azharullahshariff_b130727cs/aggregator/img/flipkart_small.png"></i>Grab this</a>
 			          					{% endif %}
 			          					{% if forloop.counter == 2 %}
@@ -146,6 +171,18 @@
 			          					{% endif %}
 			          					{% if forloop.counter == 4 %}
 			          						<a href="#0" class="ebay_site_link waves-effect waves-light btn-large disabled"><i class="material-icons right"><img class="icon_img" src="http://athena.nitc.ac.in/azharullahshariff_b130727cs/aggregator/img/ebay_small.png"></i>Grab this</a>
+=======
+			          						<a href="#0" class="flipkart_site_link waves-effect waves-light btn-large disabled"><i class="material-icons right"><img class="icon_img" src="http://localhost/aggregator/img/flipkart_small.png"></i>Grab this</a>
+			          					{% endif %}
+			          					{% if forloop.counter == 2 %}
+			          						<a href="#0" class="amazon_site_link waves-effect waves-light btn-large disabled"><i class="material-icons right"><img class="icon_img" src="http://localhost/aggregator/img/amazon_small.png"></i>Grab this</a>
+			          					{% endif %}
+			          					{% if forloop.counter == 3 %}
+			          						<a href="#0" class="snapdeal_site_link waves-effect waves-light btn-large disabled"><i class="material-icons right"><img class="icon_img" src="http://localhost/aggregator/img/snapdeal_small.png"></i>Grab this</a>
+			          					{% endif %}
+			          					{% if forloop.counter == 4 %}
+			          						<a href="#0" class="ebay_site_link waves-effect waves-light btn-large disabled"><i class="material-icons right"><img class="icon_img" src="http://localhost/aggregator/img/ebay_small.png"></i>Grab this</a>
+>>>>>>> 03d8735c63341c45ae9dc662155abeb92afd5cdb
 			          					{% endif %}
 
 							{% endif %}

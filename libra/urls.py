@@ -39,7 +39,11 @@ urlpatterns = [
     url(r'^ebay_delivery$', ebay_delivery, name="ebay_delivery"),
 ]
 
+<<<<<<< HEAD
 urlpatterns += staticfiles_urlpatterns()
+=======
+# urlpatterns += staticfiles_urlpatterns()
+>>>>>>> 03d8735c63341c45ae9dc662155abeb92afd5cdb
 
 # urlpatterns += patterns('',
 #     url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}),

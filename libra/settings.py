@@ -14,8 +14,11 @@ import os
 
 PROJECT_DIR = os.path.dirname(__file__)
 
+<<<<<<< HEAD
 PROJECT_PATH = os.path.realpath(os.path.dirname(__file__))
 
+=======
+>>>>>>> 03d8735c63341c45ae9dc662155abeb92afd5cdb
 CURRENT_PATH = os.path.abspath(os.path.dirname(__file__).decode('utf-8'))
 
 MEDIA_ROOT = os.path.join(CURRENT_PATH, 'media')
@@ -66,7 +69,11 @@ ROOT_URLCONF = 'libra.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
+<<<<<<< HEAD
         'DIRS': [os.path.join(BASE_DIR, 'libra/templates'),],
+=======
+        'DIRS': ['/Volumes/Drive_2/django/libra/libra/templates',],
+>>>>>>> 03d8735c63341c45ae9dc662155abeb92afd5cdb
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -79,8 +86,11 @@ TEMPLATES = [
     },
 ]
 
+<<<<<<< HEAD
 # TEMPLATE_DIRS = (os.path.join(BASE_DIR, 'templates'),)
 
+=======
+>>>>>>> 03d8735c63341c45ae9dc662155abeb92afd5cdb
 WSGI_APPLICATION = 'libra.wsgi.application'
 
 
